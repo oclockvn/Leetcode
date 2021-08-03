@@ -1,8 +1,27 @@
 ﻿namespace Leetcode
 {
-    public class ReverseNumber
+    public static class TestNumber
     {
-        public int Reverse(int x)
+        public static bool IsPalindrome(int x)
+        {
+            if (x < 0)
+            {
+                return false;
+            }
+
+            var t = x;
+            var i = 0;
+
+            while (x > 0)
+            {
+                i = i * 10 + x % 10;
+                x /= 10;
+            }
+
+            return i == t;
+        }
+
+        public static int Reverse(int x)
         {
             var neg = x < 0;
             if (neg) x *= -1;
@@ -18,7 +37,7 @@
             return int.TryParse(s, out x) ? (neg ? -x : x) : 0;
         }
 
-        public int Reverse2(int x)
+        public static int Reverse2(int x)
         {
             var neg = x < 0;
             if (neg) x *= -1;
@@ -39,7 +58,7 @@
             return neg ? -s : s;
         }
 
-        public int Reverse3(int x)
+        public static int Reverse3(int x)
         {
             var neg = x < 0;
             if (neg) x *= -1;
@@ -55,12 +74,12 @@
             return neg ? -Convert(s) : Convert(s);
         }
 
-        public int ReverseFastest(int x)
+        public static int ReverseFastest(int x)
         {
             return x < 0 ? -ConvertFastest(-x + "") : ConvertFastest(x + "");
         }
 
-        public int ConvertFastest(string s)
+        public static int ConvertFastest(string s)
         {
             int y = 0;
 
@@ -77,12 +96,12 @@
             return y;
         }
 
-        bool WillOverflow(int x, int factor)
+        public static bool WillOverflow(int x, int factor)
         {
             return x * factor / factor != x;
         }
 
-        int Convert(string s)
+        public static int Convert(string s)
         {
             int y = 0;
 
@@ -99,7 +118,7 @@
             return y;
         }
 
-        int BackConvert(string s)
+        public static int BackwardConvert(string s)
         {
             int y = 0;
 
@@ -116,7 +135,7 @@
             return y;
         }
 
-        int IntLength(int n)
+        public static int IntLength(int n)
         {
             if (n < 10) return 1;
             if (n < 100) return 2;
