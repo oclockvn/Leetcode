@@ -15,6 +15,7 @@ namespace Leetcode
             this.next = next;
         }
 
+        #region debug helper
         public ListNode(int[] arr)
         {
             if (arr?.Length > 0)
@@ -37,6 +38,7 @@ namespace Leetcode
 
             return arr.ToArray();
         }
+        #endregion
     }
 
     public class LinkedList
@@ -44,7 +46,6 @@ namespace Leetcode
         public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
         {
             ListNode next = l1;
-            ListNode prev = null;
             int saved = 0;
 
             do
@@ -55,57 +56,23 @@ namespace Leetcode
                 if (next.val > 9)
                 {
                     saved = next.val / 10;
-                    next.val = next.val % 10;
+                    next.val %= 10;
                 }
 
                 if (l2 != null)
                     l2 = l2.next;
 
-                prev = next;
-                next = next.next;
-                if (next == null)
+                // pre-check to avoid null ref assign
+                if (next.next == null)
                 {
-                    prev = l2;
-                    next = prev;
-
-                    //break;
-                    //if (next == null)
-                    //    break;
-                    //if (l2 != null)
-                    //{
-                    //    prev = l2;
-                    //    //l2.val += saved;
-                    //    //if (l2.val > 9)
-                    //    //{
-                    //    //    saved = l2.val / 10;
-                    //    //    l2.val = l2.val % 10;
-                    //    //}
-
-                    //    //next = l2;
-                    //    next = prev;
-                    //    //prev = next;
-                    //    //break;
-                    //}
-                }
-                //else
-                //{
-                //    next = next.next;
-                //}
-
-                if (l2 == null)
-                {
-                    //break;
+                    next.next = l2; // continue with l2 (if it's available)
+                    l2 = null; // end l2 for prevent dup
                 }
 
-                //if (next == null && l2 != null)
-                //{
-                //    next = l2;
-                //    break; // cont to l2
-                //}
-
+                next = next?.next; // cont the loop
             } while (next != null);
 
-            if (saved > 0)
+            if (saved > 0) // this is the last node
             {
                 ListNode last = l1;
                 while (last.next != null)
